@@ -166,6 +166,13 @@ class Short(IntValue):
 	def write(self, writer, font, tableDict, value, repeatIndex=None):
 		writer.writeShort(value)
 
+class UInt8(IntValue):
+	staticSize = 1
+	def read(self, reader, font, tableDict):
+		return reader.readUInt8()
+	def write(self, writer, font, tableDict, value, repeatIndex=None):
+		writer.writeUInt8(value)
+
 class UShort(IntValue):
 	staticSize = 2
 	def read(self, reader, font, tableDict):

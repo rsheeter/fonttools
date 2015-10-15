@@ -1039,6 +1039,7 @@ otData = [
 		('uint32', 'MorphFeatureCount', None, None, 'Number of feature subtable entries.'),
 		('uint32', 'MorphSubtableCount', None, None, 'The number of subtables in the chain.'),
 		('MorphFeature', 'MorphFeature', 'MorphFeatureCount', 0, 'Array of MorphFeatures.'),
+		('MorphSubtable', 'MorphSubtable', 'MorphSubtableCount', 0, 'Array of MorphSubtables.'),
         ]),
 
 	('MorphFeature', [
@@ -1047,6 +1048,13 @@ otData = [
 		('uint32', 'EnableFlags', None, None, 'Flags for the settings that this feature and setting enables.'),
 		('uint32', 'DisableFlags', None, None,
 		'Complement of flags for the settings that this feature and setting disable.'),
+        ]),
+
+	('MorphSubtable', [
+		('uint32', 'Length', None, None, 'Total subtable length, including this header.'),
+		('uint8', 'CoverageFlags', None, None, 'Most significant byte of coverage flags.'),
+		('uint16', 'Reserved', None, None, 'Unused.'),
+		('uint8', 'SubtableType', None, None, 'Subtable type.'),
         ]),
 
     # If the 'morx' table version is 3 or greater, then the last subtable in the chain is followed by a subtableGlyphCoverageArray, as described below.

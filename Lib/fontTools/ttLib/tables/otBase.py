@@ -147,6 +147,13 @@ class OTTableReader(object):
 			cachingStats[offset] = cachingStats.get(offset, 0) + 1
 		return self.__class__(self.data, self.globalState, self.localState, offset)
 
+	def readUInt8(self):
+		pos = self.pos
+		newpos = pos + 1
+		value, = struct.unpack(">B", self.data[pos:newpos])
+		self.pos = newpos
+		return value
+
 	def readUShort(self):
 		pos = self.pos
 		newpos = pos + 2
@@ -455,6 +462,10 @@ class OTTableWriter(object):
 					# subtable writers can have more than one parent writer.
 					# But we just care about first one right now.
 		return subwriter
+
+	def writeUInt8(self, value):
+		assert 0 <= value < 256
+		self.items.append(struct.pack(">B", value))
 
 	def writeUShort(self, value):
 		assert 0 <= value < 0x10000, value
