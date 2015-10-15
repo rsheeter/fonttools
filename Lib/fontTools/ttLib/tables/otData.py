@@ -1022,4 +1022,29 @@ otData = [
 		('uint16', 'SettingNameID', None, None, 'The name table index for the setting name.'),
 	]),
 
+	#
+	# morx
+	#
+
+	('morx', [
+		('uint16', 'Version', None, None, 'Version of the morx table.'),
+		('uint16', 'Reserved', None, None, 'Reserved (set to zero).'),
+		('uint32', 'ChainCount', None, None, 'Number of MorxChains.'),
+		('MorxChain', 'MorxChain', 'ChainCount', 0, 'Array of MorxChains.'),
+        ]),
+
+	('MorxChain', [
+		('uint32', 'DefaultFlags', None, None, 'The default specification for subtables.'),
+		('uint32', 'ChainLength', None, None, 'Total byte count, including this header; must be a multiple of 4.'),
+		('uint32', 'MorxFeatureCount', None, None, 'Number of feature subtable entries.'),
+		('uint32', 'MorxSubtableCount', None, None, 'The number of subtables in the chain.'),
+        ]),
+     
+# If the 'morx' table version is 3 or greater, then the last subtable in the chain is followed by a subtableGlyphCoverageArray, as described below.
+
+#		('Offset', 'MarkGlyphSetsDef', None, 'int(round(Version*0x10000)) >= 0x00010002', 'Offset to the table of mark set definitions-from beginning of GDEF header (may be NULL)'),
+
+
+
+
 ]
