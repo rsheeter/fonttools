@@ -1056,6 +1056,13 @@ otData = [
 		('uint8', 'SubtableType', None, None, 'Subtable type.'),
         ]),
 
+	('STXHeader', [
+		('uint32', 'ClassCount', None, None, 'Number of classes, which is the number of 16-bit entry indices in a single line in the state array.'),
+		('uint32', 'ClassTableOffset', None, None, 'Offset from the start of this state table header to the start of the class table.'),
+		('uint32', 'StateArrayOffset', None, None, 'Offset from the start of this state table header to the start of the state array.'),
+		('uint32', 'EntryTableOffset', None, None, 'Offset from the start of this state table header to the start of the entry table.'),
+	]),
+
     # If the 'morx' table version is 3 or greater, then the last subtable in the chain is followed by a subtableGlyphCoverageArray, as described below.
     #		('Offset', 'MarkGlyphSetsDef', None, 'int(round(Version*0x10000)) >= 0x00010002', 'Offset to the table of mark set definitions-from beginning of GDEF header (may be NULL)'),
 
