@@ -1038,13 +1038,18 @@ otData = [
 		('uint32', 'ChainLength', None, None, 'Total byte count, including this header; must be a multiple of 4.'),
 		('uint32', 'MorxFeatureCount', None, None, 'Number of feature subtable entries.'),
 		('uint32', 'MorxSubtableCount', None, None, 'The number of subtables in the chain.'),
+		('MorxFeature', 'MorxFeature', 'MorxFeatureCount', 0, 'Array of MorxFeatures.'),
         ]),
-     
-# If the 'morx' table version is 3 or greater, then the last subtable in the chain is followed by a subtableGlyphCoverageArray, as described below.
 
-#		('Offset', 'MarkGlyphSetsDef', None, 'int(round(Version*0x10000)) >= 0x00010002', 'Offset to the table of mark set definitions-from beginning of GDEF header (may be NULL)'),
+	('MorxFeature', [
+		('uint16', 'FeatureType', None, None, 'The type of feature.'),
+		('uint16', 'FeatureSetting', None, None, "The feature's setting (aka selector)."),
+		('uint32', 'EnableFlags', None, None, 'Flags for the settings that this feature and setting enables.'),
+		('uint32', 'DisableFlags', None, None,
+		'Complement of flags for the settings that this feature and setting disable.'),
+        ]),
 
-
-
+    # If the 'morx' table version is 3 or greater, then the last subtable in the chain is followed by a subtableGlyphCoverageArray, as described below.
+    #		('Offset', 'MarkGlyphSetsDef', None, 'int(round(Version*0x10000)) >= 0x00010002', 'Offset to the table of mark set definitions-from beginning of GDEF header (may be NULL)'),
 
 ]
