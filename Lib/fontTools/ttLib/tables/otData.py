@@ -1029,19 +1029,19 @@ otData = [
 	('morx', [
 		('uint16', 'Version', None, None, 'Version of the morx table.'),
 		('uint16', 'Reserved', None, None, 'Reserved (set to zero).'),
-		('uint32', 'ChainCount', None, None, 'Number of MorxChains.'),
-		('MorxChain', 'MorxChain', 'ChainCount', 0, 'Array of MorxChains.'),
+		('uint32', 'ChainCount', None, None, 'Number of MorphChains.'),
+		('MorphChain', 'MorphChain', 'ChainCount', 0, 'Array of MorphChains.'),
         ]),
 
-	('MorxChain', [
+	('MorphChain', [
 		('uint32', 'DefaultFlags', None, None, 'The default specification for subtables.'),
 		('uint32', 'ChainLength', None, None, 'Total byte count, including this header; must be a multiple of 4.'),
-		('uint32', 'MorxFeatureCount', None, None, 'Number of feature subtable entries.'),
-		('uint32', 'MorxSubtableCount', None, None, 'The number of subtables in the chain.'),
-		('MorxFeature', 'MorxFeature', 'MorxFeatureCount', 0, 'Array of MorxFeatures.'),
+		('uint32', 'MorphFeatureCount', None, None, 'Number of feature subtable entries.'),
+		('uint32', 'MorphSubtableCount', None, None, 'The number of subtables in the chain.'),
+		('MorphFeature', 'MorphFeature', 'MorphFeatureCount', 0, 'Array of MorphFeatures.'),
         ]),
 
-	('MorxFeature', [
+	('MorphFeature', [
 		('uint16', 'FeatureType', None, None, 'The type of feature.'),
 		('uint16', 'FeatureSetting', None, None, "The feature's setting (aka selector)."),
 		('uint32', 'EnableFlags', None, None, 'Flags for the settings that this feature and setting enables.'),
