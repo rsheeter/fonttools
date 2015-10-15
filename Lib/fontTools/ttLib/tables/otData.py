@@ -1045,9 +1045,8 @@ otData = [
 	('MorphFeature', [
 		('uint16', 'FeatureType', None, None, 'The type of feature.'),
 		('uint16', 'FeatureSetting', None, None, "The feature's setting (aka selector)."),
-		('uint32', 'EnableFlags', None, None, 'Flags for the settings that this feature and setting enables.'),
-		('uint32', 'DisableFlags', None, None,
-		'Complement of flags for the settings that this feature and setting disable.'),
+		('Flags32', 'EnableFlags', None, None, 'Flags for the settings that this feature and setting enables.'),
+		('Flags32', 'DisableFlags', None, None, 'Complement of flags for the settings that this feature and setting disable.'),
         ]),
 
 	('MorphSubtable', [

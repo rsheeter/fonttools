@@ -159,6 +159,11 @@ class ULong(IntValue):
 	def write(self, writer, font, tableDict, value, repeatIndex=None):
 		writer.writeULong(value)
 
+class Flags32(ULong):
+	def xmlWrite(self, xmlWriter, font, value, name, attrs):
+		xmlWriter.simpletag(name, attrs + [("value", "0x%08X" % value)])
+		xmlWriter.newline()
+
 class Short(IntValue):
 	staticSize = 2
 	def read(self, reader, font, tableDict):
@@ -485,6 +490,7 @@ converterMapping = {
 	"uint16":	UShort,
 	"uint24":	UInt24,
 	"uint32":	ULong,
+	"Flags32":	Flags32,
 	"Version":	Version,
 	"Tag":		Tag,
 	"GlyphID":	GlyphID,
