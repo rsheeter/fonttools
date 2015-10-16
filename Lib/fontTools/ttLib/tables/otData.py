@@ -1035,7 +1035,7 @@ otData = [
 
 	('MorphChain', [
 		('uint32', 'DefaultFlags', None, None, 'The default specification for subtables.'),
-		('uint32', 'ChainLength', None, None, 'Total byte count, including this header; must be a multiple of 4.'),
+		('uint32', 'StructLength', None, None, 'Total byte count, including this header; must be a multiple of 4.'),
 		('uint32', 'MorphFeatureCount', None, None, 'Number of feature subtable entries.'),
 		('uint32', 'MorphSubtableCount', None, None, 'The number of subtables in the chain.'),
 		('MorphFeature', 'MorphFeature', 'MorphFeatureCount', 0, 'Array of MorphFeatures.'),
@@ -1050,7 +1050,7 @@ otData = [
         ]),
 
 	('MorphSubtable', [
-		('uint32', 'Length', None, None, 'Total subtable length, including this header.'),
+		('uint32', 'StructLength', None, None, 'Total subtable length, including this header.'),
 		('uint8', 'CoverageFlags', None, None, 'Most significant byte of coverage flags.'),
 		('uint8', 'Reserved', None, None, 'Unused.'),
 		('uint16', 'LookupType', None, None, 'Subtable type.'),

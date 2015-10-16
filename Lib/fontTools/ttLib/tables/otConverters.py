@@ -483,6 +483,20 @@ class DeltaValue(BaseConverter):
 		return safeEval(attrs["value"])
 
 
+class StructWithLength(Struct):
+
+	def read(self, reader, font, tableDict):
+		pos = reader.pos
+		table = self.tableClass()
+		table.decompile(reader, font)
+		reader.seek(pos + table.StructLength)
+		return table
+
+	def write(self, writer, font, tableDict, value, repeatIndex=None):
+		value.compile(writer, font)
+		assert 0, "Fix length"
+
+
 converterMapping = {
 	# type		class
 	"int16":	Short,
@@ -501,4 +515,6 @@ converterMapping = {
 	"LOffset":	LTable,
 	"ValueRecord":	ValueRecord,
 	"DeltaValue":	DeltaValue,
+	"MorphChain":	StructWithLength,
+	"MorphSubtable":StructWithLength,
 }

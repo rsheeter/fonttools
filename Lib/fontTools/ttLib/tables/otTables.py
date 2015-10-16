@@ -801,7 +801,9 @@ def _buildClasses():
 		},
 		'morx': {
 			#0: RearrangementMorph,
+			1: LigatureMorph,#XXX
 			2: LigatureMorph,
+			4: LigatureMorph,#XXX
 		},
 	}
 	lookupTypes['JSTF'] = lookupTypes['GPOS']  # JSTF contains GPOS
