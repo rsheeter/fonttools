@@ -24,6 +24,8 @@ def buildConverters(tableSpec, tableNamespace):
 			converterClass = ExtSubTable
 		elif name == "FeatureParams":
 			converterClass = FeatureParams
+		elif name == "SubStruct":
+			converterClass = SubStruct
 		else:
 			if not tp in converterMapping:
 				tableName = tp
@@ -32,7 +34,7 @@ def buildConverters(tableSpec, tableNamespace):
 				converterClass = converterMapping[tp]
 		tableClass = tableNamespace.get(tableName)
 		conv = converterClass(name, repeat, aux, tableClass)
-		if name in ["SubTable", "ExtSubTable"]:
+		if name in ["SubTable", "ExtSubTable", "SubStruct"]:
 			conv.lookupTypes = tableNamespace['lookupTypes']
 			# also create reverse mapping
 			for t in conv.lookupTypes.values():
@@ -393,6 +395,11 @@ class ExtSubTable(LTable, SubTable):
 class FeatureParams(Table):
 	def getConverter(self, featureTag):
 		tableClass = self.featureParamTypes.get(featureTag, self.defaultFeatureParams)
+		return self.__class__(self.name, self.repeat, self.aux, tableClass)
+
+class SubStruct(Struct):
+	def getConverter(self, tableType, lookupType):
+		tableClass = self.lookupTypes[tableType][lookupType]
 		return self.__class__(self.name, self.repeat, self.aux, tableClass)
 
 

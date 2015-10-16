@@ -1053,8 +1053,8 @@ otData = [
 		('uint32', 'StructLength', None, None, 'Total subtable length, including this header.'),
 		('uint8', 'CoverageFlags', None, None, 'Most significant byte of coverage flags.'),
 		('uint8', 'Reserved', None, None, 'Unused.'),
-		('uint16', 'LookupType', None, None, 'Subtable type.'),
-		('SubTable', 'SubTable', None, None, 'SubTable.'),
+		('uint16', 'MorphType', None, None, 'Subtable type.'),
+		('SubStruct', 'SubStruct', None, None, 'SubTable.'),
         ]),
 
 	('STXHeader', [
