@@ -799,6 +799,10 @@ def _buildClasses():
 			8: ChainContextPos,
 			9: ExtensionPos,
 		},
+		'morx': {
+			#0: RearrangementMorph,
+			2: LigatureMorph,
+		},
 	}
 	lookupTypes['JSTF'] = lookupTypes['GPOS']  # JSTF contains GPOS
 	for lookupEnum in lookupTypes.values():

@@ -1052,8 +1052,9 @@ otData = [
 	('MorphSubtable', [
 		('uint32', 'Length', None, None, 'Total subtable length, including this header.'),
 		('uint8', 'CoverageFlags', None, None, 'Most significant byte of coverage flags.'),
-		('uint16', 'Reserved', None, None, 'Unused.'),
-		('uint8', 'SubtableType', None, None, 'Subtable type.'),
+		('uint8', 'Reserved', None, None, 'Unused.'),
+		('uint16', 'LookupType', None, None, 'Subtable type.'),
+		('SubTable', 'SubTable', None, None, 'SubTable.'),
         ]),
 
 	('STXHeader', [
@@ -1061,6 +1062,10 @@ otData = [
 		('uint32', 'ClassTableOffset', None, None, 'Offset from the start of this state table header to the start of the class table.'),
 		('uint32', 'StateArrayOffset', None, None, 'Offset from the start of this state table header to the start of the state array.'),
 		('uint32', 'EntryTableOffset', None, None, 'Offset from the start of this state table header to the start of the entry table.'),
+	]),
+
+	('LigatureMorph', [
+		('STXHeader', 'StateHeader', None, None, ''),
 	]),
 
     # If the 'morx' table version is 3 or greater, then the last subtable in the chain is followed by a subtableGlyphCoverageArray, as described below.
