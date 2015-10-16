@@ -16,7 +16,7 @@ def buildConverters(tableSpec, tableNamespace):
 		if name.startswith("ValueFormat"):
 			assert tp == "uint16"
 			converterClass = ValueFormat
-		elif name.endswith("Count") or name.endswith("LookupType"):
+		elif name.endswith("Count") or name.endswith("LookupType") or name == 'MorphType':
                         converterClass = {"uint16": ComputedUShort, "uint32": ComputedULong}[tp]
 		elif name == "SubTable":
 			converterClass = SubTable
