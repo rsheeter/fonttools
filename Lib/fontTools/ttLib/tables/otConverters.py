@@ -436,6 +436,29 @@ class ValueRecord(ValueFormat):
 		return value
 
 
+class AATLookup(BaseConverter):
+	def read(self, reader, font, tableDict):
+		format = reader.readUShort()
+		glyphs = font.getGlyphOrder()
+		if format == 0:
+			data = reader.readData(2 * len(glyphs))
+			arr = array.array("H", data)
+			if sys.byteorder != "big":
+				arr.byteswap()
+			mapping = {k:v for k,v in enumerate(arr)}
+		else:
+			# TODO: Implement, fail for unknown formats.
+			mapping = {}
+		return {glyphs[k]:glyphs[v] for k,v in mapping.items() if k != v}
+
+	def xmlWrite(self, xmlWriter, font, value, name, attrs):
+		items = sorted(value.items())
+		for inGlyph, outGlyph in items:
+			xmlWriter.simpletag("Substitution",
+					[("in", inGlyph), ("out", outGlyph)])
+			xmlWriter.newline()
+
+
 class DeltaValue(BaseConverter):
 
 	def read(self, reader, font, tableDict):
@@ -522,6 +545,7 @@ converterMapping = {
 	"LOffset":	LTable,
 	"ValueRecord":	ValueRecord,
 	"DeltaValue":	DeltaValue,
+        "AATLookup":	AATLookup,
 	"MorphChain":	StructWithLength,
 	"MorphSubtable":StructWithLength,
 }

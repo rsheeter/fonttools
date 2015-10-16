@@ -989,6 +989,12 @@ otData = [
 	## Apple Advanced Typography (AAT) tables
 	##
 
+	('AATLookupSegment', [
+		('uint16', 'lastGlyph', None, None, 'Last glyph index in this segment.'),
+		('uint16', 'firstGlyph', None, None, 'First glyph index in this segment.'),
+		('uint16', 'value', None, None, 'A 16-bit offset from the start of the table to the data.'),
+        ]),
+
 	#
 	# feat
 	#
@@ -1084,7 +1090,7 @@ otData = [
 	]),
 
 	('NoncontextualMorph', [
-            # TODO: Add missing parts.
+		('AATLookup', 'mapping', None, None, 'The noncontextual glyph substitution table.'),
         ]),
 
 	('InsertionMorph', [
