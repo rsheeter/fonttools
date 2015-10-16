@@ -1026,6 +1026,8 @@ otData = [
 	# morx
 	#
 
+	# TODO: use 'struct' when field.type == field.name
+
 	('morx', [
 		('uint16', 'Version', None, None, 'Version of the morx table.'),
 		('uint16', 'Reserved', None, None, 'Reserved (set to zero).'),
@@ -1065,7 +1067,16 @@ otData = [
 	]),
 
 	('LigatureMorph', [
-		('STXHeader', 'StateHeader', None, None, ''),
+		('STXHeader', 'StateHeader', None, None, 'Header.'),
+		('uint32', 'LigActionOffset', None, None, 'Byte offset from stateHeader to the start of the ligature action table.'),
+		('uint32', 'ComponentOffset', None, None, 'Byte offset from stateHeader to the start of the component table.'),
+		('uint32', 'LigatureOffset', None, None, 'Byte offset from stateHeader to the start of the actual ligature lists.'),
+	]),
+
+	('MorphClass', [
+		('uint16', 'FirstGlyph', None, None, 'Glyph index of the first glyph in the class table.'),
+		('uint16', 'GlyphCount', None, None, 'Number of glyphs in class table.'),
+		('uint8', 'GlyphClass', 'GlyphCount', 0, 'The class codes (indexed by glyph index minus firstGlyph). Class codes range from 0 to the value of stateSize minus 1.'),
 	]),
 
     # If the 'morx' table version is 3 or greater, then the last subtable in the chain is followed by a subtableGlyphCoverageArray, as described below.
