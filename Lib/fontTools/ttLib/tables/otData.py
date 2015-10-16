@@ -1036,7 +1036,7 @@ otData = [
         ]),
 
 	('MorphChain', [
-		('uint32', 'DefaultFlags', None, None, 'The default specification for subtables.'),
+		('Flags32', 'DefaultFlags', None, None, 'The default specification for subtables.'),
 		('uint32', 'StructLength', None, None, 'Total byte count, including this header; must be a multiple of 4.'),
 		('uint32', 'MorphFeatureCount', None, None, 'Number of feature subtable entries.'),
 		('uint32', 'MorphSubtableCount', None, None, 'The number of subtables in the chain.'),
@@ -1056,27 +1056,46 @@ otData = [
 		('uint8', 'CoverageFlags', None, None, 'Most significant byte of coverage flags.'),
 		('uint8', 'Reserved', None, None, 'Unused.'),
 		('uint16', 'MorphType', None, None, 'Subtable type.'),
+		('Flags32', 'SubFeatureFlags', None, None, 'The 32-bit mask identifying which subtable this is (the subtable being executed if the AND of this value and the processed defaultFlags is nonzero).'),
 		('SubStruct', 'SubStruct', None, None, 'SubTable.'),
         ]),
 
-	('STXHeader', [
+	('StateHeader', [
 		('uint32', 'ClassCount', None, None, 'Number of classes, which is the number of 16-bit entry indices in a single line in the state array.'),
-		('uint32', 'ClassTableOffset', None, None, 'Offset from the start of this state table header to the start of the class table.'),
+		('uint32', 'MorphClass', None, None, 'Offset from the start of this state table header to the start of the class table.'),
 		('uint32', 'StateArrayOffset', None, None, 'Offset from the start of this state table header to the start of the state array.'),
 		('uint32', 'EntryTableOffset', None, None, 'Offset from the start of this state table header to the start of the entry table.'),
 	]),
 
+	('RearrangementMorph', [
+		('struct', 'StateHeader', None, None, 'Header.'),
+	]),
+
+	('ContextualMorph', [
+		('struct', 'StateHeader', None, None, 'Header.'),
+		# TODO: Add missing parts.
+	]),
+
 	('LigatureMorph', [
-		('STXHeader', 'StateHeader', None, None, 'Header.'),
+		('struct', 'StateHeader', None, None, 'Header.'),
 		('uint32', 'LigActionOffset', None, None, 'Byte offset from stateHeader to the start of the ligature action table.'),
 		('uint32', 'ComponentOffset', None, None, 'Byte offset from stateHeader to the start of the component table.'),
 		('uint32', 'LigatureOffset', None, None, 'Byte offset from stateHeader to the start of the actual ligature lists.'),
 	]),
 
+	('NoncontextualMorph', [
+            # TODO: Add missing parts.
+        ]),
+
+	('InsertionMorph', [
+		('struct', 'StateHeader', None, None, 'Header.'),
+		# TODO: Add missing parts.
+	]),
+
 	('MorphClass', [
 		('uint16', 'FirstGlyph', None, None, 'Glyph index of the first glyph in the class table.'),
-		('uint16', 'GlyphCount', None, None, 'Number of glyphs in class table.'),
-		('uint8', 'GlyphClass', 'GlyphCount', 0, 'The class codes (indexed by glyph index minus firstGlyph). Class codes range from 0 to the value of stateSize minus 1.'),
+		#('uint16', 'GlyphCount', None, None, 'Number of glyphs in class table.'),
+		#('uint8', 'GlyphClass', 'GlyphCount', 0, 'The class codes (indexed by glyph index minus firstGlyph). Class codes range from 0 to the value of stateSize minus 1.'),
 	]),
 
     # If the 'morx' table version is 3 or greater, then the last subtable in the chain is followed by a subtableGlyphCoverageArray, as described below.
