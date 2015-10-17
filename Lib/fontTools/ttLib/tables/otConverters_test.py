@@ -28,5 +28,18 @@ class GlyphIDTest(unittest.TestCase):
         self.assertEqual(writer.getData(), deHexStr("0002"))
 
 
+class AATLookupTest(unittest.TestCase):
+    font = FakeFont(".notdef A B C D E".split())
+    converter = otConverters.AATLookup("AATLookup", 0, None, None)
+
+    def test_readFormat0(self):
+        reader = OTTableReader(deHexStr("0000 0000 0001 0002 0000 7D00 0001"))
+        self.assertEqual(self.converter.read(reader, self.font, None), {
+            "C": ".notdef",
+            "D": "glyph32000",
+            "E": "A"
+        })
+
+
 if __name__ == "__main__":
     unittest.main()
