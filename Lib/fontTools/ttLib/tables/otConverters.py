@@ -452,12 +452,8 @@ class AATLookup(BaseConverter):
 		        for k, v in mapping.items() if k != v}
 
 	def readFormat0(self, reader, numGlyphs):
-		# TODO: Add otReader.readUShortArray() and use it here.
-		data = reader.readData(numGlyphs * 2)
-		arr = array.array("H", data)
-		if sys.byteorder != "big":
-			arr.byteswap()
-		return {k:v for (k,v) in enumerate(arr)}
+		data = reader.readUShortArray(numGlyphs)
+		return {k:v for (k,v) in enumerate(data)}
 
 	def readFormat4(self, reader):
 		# TODO: When parsing MorphSubtable index=34 in Zapfino.ttf,
@@ -478,11 +474,8 @@ class AATLookup(BaseConverter):
 			offset = reader.readUShort()
 			if last != 0xFFFF:
 				dataReader = reader.getSubReader(offset) # [*]
-				data = dataReader.readData(2 * (last - first + 1))
-				arr = array.array("H", data)
-				if sys.byteorder != "big":
-					arr.byteswap()
-				for k, v in enumerate(arr):
+				data = dataReader.readUShortArray(last - first + 1)
+				for k, v in enumerate(data):
 					mapping[first + k] = v
 		return mapping
 
