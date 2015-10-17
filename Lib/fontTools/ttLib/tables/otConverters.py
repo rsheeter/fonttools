@@ -441,15 +441,57 @@ class AATLookup(BaseConverter):
 		format = reader.readUShort()
 		glyphs = font.getGlyphOrder()
 		if format == 0:
-			data = reader.readData(2 * len(glyphs))
-			arr = array.array("H", data)
-			if sys.byteorder != "big":
-				arr.byteswap()
-			mapping = {k:v for k,v in enumerate(arr)}
+			mapping = self.readFormat0(reader, len(glyphs))
+		elif format == 4:
+                        mapping = self.readFormat4(reader)
 		else:
-			# TODO: Implement, fail for unknown formats.
+			# TODO: Implement missing formats.
 			mapping = {}
-		return {glyphs[k]:glyphs[v] for k,v in mapping.items() if k != v}
+		name = self.getGlyphName
+		return {name(k, glyphs):name(v, glyphs)
+		        for k, v in mapping.items() if k != v}
+
+	def readFormat0(self, reader, numGlyphs):
+		# TODO: Add otReader.readUShortArray() and use it here.
+		data = reader.readData(numGlyphs * 2)
+		arr = array.array("H", data)
+		if sys.byteorder != "big":
+			arr.byteswap()
+		return {k:v for (k,v) in enumerate(arr)}
+
+	def readFormat4(self, reader):
+		# TODO: When parsing MorphSubtable index=34 in Zapfino.ttf,
+		# it seems that we're getting the right mapping keys
+		# but the substituted glyphs seem a little weird. Possibly,
+		# we're reading the array from the wrong offset at line [*].
+		# Sadly, ftxdumperfuser is not emitting the content of this
+		# particular subtable due to a bug in the tool. Once we have
+		# a fixed version of ftxdumperfuser, it will be easier to
+		# figure out what the right offset is.
+		mapping = {}
+		pos = reader.pos
+		size = reader.readUShort()
+		for i in range(reader.readUShort()):
+			reader.seek(pos + i * size + 10)
+			last = reader.readUShort()
+			first = reader.readUShort()
+			offset = reader.readUShort()
+			if last != 0xFFFF:
+				dataReader = reader.getSubReader(offset) # [*]
+				data = dataReader.readData(2 * (last - first + 1))
+				arr = array.array("H", data)
+				if sys.byteorder != "big":
+					arr.byteswap()
+				for k, v in enumerate(arr):
+					mapping[first + k] = v
+		return mapping
+
+	@staticmethod
+	def getGlyphName(glyphID, glyphNames):
+		if glyphID < len(glyphNames):
+			return glyphNames[glyphID]
+		else:
+			return "glyph%.5d" % glyphID
 
 	def xmlWrite(self, xmlWriter, font, value, name, attrs):
 		items = sorted(value.items())
