@@ -447,7 +447,7 @@ class AATLookup(BaseConverter):
 		else:
 			# TODO: Implement missing formats.
 			mapping = {}
-		name = self.getGlyphName
+		name = font.getGlyphName
 		return {name(k, glyphs):name(v, glyphs)
 		        for k, v in mapping.items() if k != v}
 
@@ -478,13 +478,6 @@ class AATLookup(BaseConverter):
 				for k, v in enumerate(data):
 					mapping[first + k] = v
 		return mapping
-
-	@staticmethod
-	def getGlyphName(glyphID, glyphNames):
-		if glyphID < len(glyphNames):
-			return glyphNames[glyphID]
-		else:
-			return "glyph%.5d" % glyphID
 
 	def xmlWrite(self, xmlWriter, font, value, name, attrs):
 		items = sorted(value.items())
