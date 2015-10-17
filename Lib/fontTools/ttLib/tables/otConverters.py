@@ -447,8 +447,7 @@ class AATLookup(BaseConverter):
 		else:
 			# TODO: Implement missing formats.
 			mapping = {}
-		name = font.getGlyphName
-		return {name(k, glyphs):name(v, glyphs)
+		return {font.getGlyphName(k):font.getGlyphName(v)
 		        for k, v in mapping.items() if k != v}
 
 	def readFormat0(self, reader, numGlyphs):
