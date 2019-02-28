@@ -15,10 +15,10 @@ def _gvar_regions(font):
   regions = set()
   for tuple_variations in gvar.variations.values():
     for tuple_variation in tuple_variations:
-      region = ()
+      region = []
       for axis_tag, (min_v, peak_v, max_v) in tuple_variation.axes.items():
-        region += ((axis_tag, min_v, peak_v, max_v))
-      regions.add(region)
+        region.append((axis_tag, min_v, peak_v, max_v))
+      regions.add(tuple(sorted(region, key=lambda t: t[0])))
   return regions
 
 for fontfile in sys.argv[1:]:
